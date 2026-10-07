@@ -1,0 +1,49 @@
+# ==================== 私有数据（不开源） ====================
+# 开发记录 / TODO
+todo.md
+record.md
+
+# 真实合同 PDF 样本（含真实企业信息，严禁入库）
+test_data/
+
+# 运行时生成目录：向量索引（chunks.pkl 含合同原文）、评测报告
+data/
+
+# 黄金评测集（基于真实合同人工标注；仅保留 example 与标注模板）
+src/eval/golden_*.jsonl
+!src/eval/golden_qa.example.jsonl
+
+# 模型缓存（体积大，用 scripts/download_models.py 重新下载）
+models/
+*.bin
+*.safetensors
+*.gguf
+
+# 索引/序列化产物安全兜底（均可由 ingest 重建）
+*.pkl
+*.faiss
+
+# ==================== Python ====================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# ==================== 系统 / IDE ====================
+.DS_Store
+.vscode/
+.idea/
+*.log
+
+# ==================== 环境配置 ====================
+.env
+.env.local

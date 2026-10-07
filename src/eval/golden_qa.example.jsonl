@@ -1,0 +1,9 @@
+# 每行一个 JSON 用例。字段：id/query/task_type/doc_scope/must_cite/expected_answer_points/expected_verdict/note
+# - doc_scope: 限定本 case 检索范围（doc_id 列表），定向查询必填；跨合同全局查询留空
+# - must_cite: 检索必须命中的条款 spec 子集 {doc_id?,clause_label?,page_start?}；空=不校验召回
+# 示例 clause_label 为占位，请按 test_data 三份合同的真实条款标号改值后跑
+{"id":"simple-supplier","query":"这份合同的供应商是哪家？","task_type":"simple","doc_scope":["T_贸易合同_20221115001_1"],"must_cite":[{"clause_label":"首部"}],"expected_answer_points":["供应商名称"],"note":"单合同定向：首部信息查询"}
+{"id":"simple-amount","query":"合同金额是多少？","task_type":"simple","doc_scope":["T_贸易合同_20221115001_1"],"must_cite":[{"clause_label":"1"}],"expected_answer_points":["合同金额数字"],"note":"单合同定向：金额单点查询"}
+{"id":"complex-payment-terms","query":"合同对付款节点和逾期付款责任分别是怎么约定的？","task_type":"complex","doc_scope":["T_贸易合同_20221115001_1"],"must_cite":[{"clause_label":"5"},{"clause_label":"9"}],"expected_answer_points":["付款节点","逾期付款违约金"],"note":"单合同定向：多条款综合"}
+{"id":"breach-late-delivery","query":"乙方逾期供货10天，是否构成违约？违约金怎么算？","task_type":"breach","doc_scope":["T_贸易合同_20221115001_1"],"must_cite":[{"clause_label":"9.4"}],"expected_verdict":{"breach_established":true,"breaching_party":"乙方"},"note":"单合同定向：逾期供货违约判定"}
+{"id":"global-cross-doc","query":"哪些合同约定了逾期供货违约金？","task_type":"complex","must_cite":[{"clause_label":"9.4"}],"expected_answer_points":["多份合同违约金条款"],"note":"跨合同全局查询：不设 doc_scope"}

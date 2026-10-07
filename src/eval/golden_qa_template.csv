@@ -1,0 +1,29 @@
+# ============================================================
+# 合同问答黄金集标注模板 —— 法律/业务人员填写说明
+# ============================================================
+# 填写流程（重要）：
+#   1. 每行 = 一个真实问题（从业务方/历史咨询里捞，别自己编）
+#   2. 你必须先人工读合同 PDF 原文，独立判定该问题应命中哪些条款
+#      —— 不要参考系统答案，否则 golden 永远等于系统输出，评测无意义
+#   3. 把判定结果填进下表对应列
+#   4. 填完用 csv_to_jsonl.py 转成 jsonl 供 runner 使用
+#
+# 列说明：
+#   id                              必填。唯一编号，建议 类型-主题-序号
+#   query                           必填。问题原文，用户口吻
+#   task_type                       必填。simple(单点事实)/breach(违约判定)/complex(多条款综合)
+#   doc_scope                       定向查询填合同文件名(不含.pdf)，多个用|分隔；跨合同全局查询留空
+#   must_cite                       必填。必须召回的金标条款，格式 条款号@页码，多个用|分隔
+#                                   页码可省(只填条款号)，如：第八条@5|第九条@6|第十二条@9
+#                                   页码范围写 5-6，脚本取起始页
+#   expected_answer_points          答案必须包含的要点，用；分隔
+#   expected_verdict_breach_established  仅 breach 类填 true/false，其他留空
+#   expected_verdict_breaching_party      仅 breach 类填违约方(甲方/乙方/双方/无)，其他留空
+#   note                            备注，可空
+#
+# ============ 示例（法律人员照此格式填真实问题）============
+# breach-late-supply,乙方逾期供货10天是否构成违约,breach,T_贸易合同_20221115001_1,第八条@5|第九条@6|第十二条@9,违约成立；违约方乙方；违约金按日万分之五,true,乙方,逾期供货判定
+# simple-supplier,这份合同的供应商是谁,simple,T_贸易合同_20221115001_1,首部@1,供应商全称,,,首部信息查询
+# complex-payment,付款节点和逾期付款责任分别怎么约定,complex,T_贸易合同_20221115001_1,第五条@4|第九条@6,付款节点；逾期付款违约金,,,多条款综合
+# ============ 示例结束，下方开始正式填写 ============
+id,query,task_type,doc_scope,must_cite,expected_answer_points,expected_verdict_breach_established,expected_verdict_breaching_party,note
